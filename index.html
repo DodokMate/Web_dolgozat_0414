@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Áruház</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 
         <div class="csvFeltoltes">
             <label for="csvFile">Termékek importálása:</label>
-            <input type="file" id="csvFile" accept=".csv">
+            <input type="file" id="csvFile" accept=".csv" onchange="importTermekekCSV(aruhaz)">
         </div>
 
         <div class="termekekLista">
@@ -117,15 +117,24 @@
                 const csvContent = event.target.result;
                 const rows = csvContent.split('\n');
 
+                const termekListaElem = document.getElementById("termekLista");
+                termekListaElem.innerHTML = '';
+
                 rows.forEach(row => {
                     const [nev, ar, raktarKeszlet, kategoria] = row.split(',');
+
                     const termek = new Termek(nev.trim(), parseInt(ar.trim()), parseInt(raktarKeszlet.trim()), kategoria.trim());
                     aruhaz.termekHozzaad(termek);
+
+                    const listaelem = document.createElement("li");
+                    listaelem.textContent = termek.megjelenit();
+                    termekListaElem.appendChild(listaelem);
                 });
             };
 
             reader.readAsText(csvFile);
         }
+
 
         //Feladat 4
         function vasarlasFunkcio(aruhaz) {
