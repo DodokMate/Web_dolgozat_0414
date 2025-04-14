@@ -1,22 +1,67 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Áruház</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    
+    <div class="container">
+        <h1>Áruház</h1>
+
+        <div class="csvFeltoltes">
+            <label for="csvFile">Termékek importálása:</label>
+            <input type="file" id="csvFile" accept=".csv">
+        </div>
+
+        <div class="termekekLista">
+            <h2>Termékek:</h2>
+            <ul id="termekLista">
+
+            </ul>
+        </div>
+
+        <div class="vasarlas">
+            <h2>Vásárlás:</h2>
+            <label for="termekNev">Termék neve:</label>
+            <input type="text" id="termekNev" placeholder="Írd be a termék nevét">
+            <button onclick="vasarlas()">Vásárlás</button>
+        </div>
+
+        <div class="frissitettTermek">
+            <h2>Termék frissítése:</h2>
+            <label for="frissitettNev">Termék neve:</label>
+            <input type="text" id="frissitettNev" placeholder="Írd be a termék nevét">
+
+            <label for="frissitettAr">Új ár:</label>
+            <input type="number" id="frissitettAr" placeholder="Új ár">
+
+            <label for="frissitettKeszlet">Új készlet:</label>
+            <input type="number" id="frissitettKeszlet" placeholder="Új készlet">
+
+            <button onclick="frissitettTermek()">Frissítés</button>
+        </div>
+
+        <div class="kategoriaSzures">
+            <h2>Kategória szűrés:</h2>
+            <label for="kategoriaSzures">Válassz kategóriát:</label>
+
+            <select id="kategoriaSzures" onchange="kategoriaSzures()">
+                <option value="">--Válassz egy kategóriát--</option>
+                <option value="Gyümölcs">Gyümölcs</option>
+                <option value="Pékáru">Pékáru</option>
+                <option value="Zöldség">Zöldség</option>
+            </select>
+
+        </div>
+    </div>
 
     <script>
-        class Termek {
-            constructor(nev, ar, mennyiseg, gyarto, kiadas_eve) {
-                this.nev = nev;
-                this.ar = ar;
-                this.raktarKeszlet = raktarKeszlet;
-                this.kategoria = kategoria;
-            }
-        }
+
     </script>
 </body>
+
 </html>
