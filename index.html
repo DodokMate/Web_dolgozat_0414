@@ -60,7 +60,103 @@
     </div>
 
     <script>
+        //Feladat 1
+        class Termek {
+            constructor(neve, ara, raktarKeszlet, kategoria) {
+                this.neve = neve;
+                this.ara = ara;
+                this.raktarKeszlet = raktarKeszlet;
+                this.kategoria = kategoria;
+            }
 
+            megjelenit() {
+                return `${this.neve}, ${this.ara} Ft, ${this.raktarKeszlet} db, ${this.kategoria}`;
+            }
+
+            csokkentRaktarKeszlet() {
+                if (this.raktarKeszlet > 0) {
+                    this.raktarKeszlet -= 1;
+                    return `Új készlet: ${this.raktarKeszlet} db`;
+                } else {
+                    return `A termék nincs raktáron.`;
+                }
+            }
+        }
+
+        //Feladat 2
+        class Aruhaz {
+            constructor() {
+                this.termekek = [];
+            }
+
+            termekHozzaad(termek) {
+                this.termekek.push(termek);
+            }
+
+            osszesTermekMegjelenitese() {
+                this.termekek.forEach(termek => {
+                    termek.megjelenit();
+                });
+            }
+
+            termekVasarlas(nev) {
+                const termek = this.termekek.find(t => t.neve === nev);
+                if (termek) {
+                    return termek.csokkentRaktarKeszlet();
+                } else {
+                    return `A termék nem található.`;
+                }
+            }
+        }
+
+        //Feladat 3
+        function importTermekekCSV(csvFile, aruhaz) {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const csvContent = event.target.result;
+                const rows = csvContent.split('\n');
+
+                rows.forEach(row => {
+                    const [nev, ar, raktarKeszlet, kategoria] = row.split(',');
+                    const termek = new Termek(nev.trim(), parseInt(ar.trim()), parseInt(raktarKeszlet.trim()), kategoria.trim());
+                    aruhaz.termekHozzaad(termek);
+                });
+            };
+
+            reader.readAsText(csvFile);
+        }
+
+        //Feladat 4
+        function vasarlasFunkcio(aruhaz) {
+            const termekNev = prompt("Add meg a vásárolni kívánt termék nevét:");
+
+            const eredmeny = aruhaz.termekVasarlas(termekNev);
+            alert(eredmeny);
+        }
+
+        //Extra 1
+        function frissitesTermek(termekNev, ujAr, ujKeszlet) {
+            const termek = aruhaz.termekek.find(t => t.neve === termekNev);
+            if (termek) {
+                termek.ara = ujAr;
+                termek.raktarKeszlet = ujKeszlet;
+                alert(`A ${termekNev} termék frissítve lett! Új ár: ${ujAr} Ft, Új készlet: ${ujKeszlet} db`);
+                aruhaz.osszesTermekMegjelenitese();
+            } else {
+                alert('A keresett termék nem található!');
+            }
+        }
+
+        //Extra 2
+        function kategoriaSzures() {
+            const kivalasztottKategoria = document.getElementById('kategoriaSzures').value;
+            if (kivalasztottKategoria) {
+                kategoriakSzerintiSzures(kivalasztottKategoria);
+            } else {
+                aruhaz.osszesTermekMegjelenitese();
+            }
+        }
     </script>
 </body>
 
